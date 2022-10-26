@@ -1,13 +1,16 @@
 import './App.css';
-import NavBar from "./components/NavBar/navBar";
 import "bootstrap/dist/css/bootstrap.min.css"
+import NavBar from "./components/NavBar/navBar";
+
+import ItemListContainer from "./containers/ItemListContainer/itemListContainer";
 
 function App() {
     return (
         <div className="App">
-           <div class="navbar navbar-expand-lg bg-light">
+
             <NavBar/>
-           </div>
+            <ItemListContainer greeting={"Hola ! Bienvenidos a mi E-Commerce"}/>
+
         </div>
     );
 }
