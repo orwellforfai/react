@@ -1,23 +1,21 @@
 import React from 'react'
+import {useNavigate} from "react-router-dom";
 
 //Card - HAce el renderizado con la CARD
+
 const Item = ({product}) => {
-    return (
+    const navigate = useNavigate()
 
-        // <div className="card" style="width: 18rem;">
-        //     <p key={product.id} />
-        //     <img className="card-img-top" src={product.img} alt="Card image cap"/>
-        //     <div className="card-body">
-        //         <h5 className="card-title">{product.name}</h5>
-        //
-        //     </div>
-        // </div>
+    const navigateDetail = () => {
+        // link al detalle del producto
+        navigate('/detail/${product.char_id}')
+    }
+        return (
+    <div onClick={navigateDetail}>
+        <img src={product.img} alt={"Character Name"}/>
+        <p> {product.name}</p>
+    </div>
 
-        <div>
-        <img src={product.img} alt={"Character Name"} />
-        <p key={product.id}> {product.name}</p>
-        </div>
-
-    )
+)
 }
 export default Item

@@ -1,15 +1,22 @@
 import React from "react";
 import "./navBar.css"
 import CartWidget from "../CartWidget/cartWidget";
+import {Link} from "react-router-dom";
 
 const NavBar = () => {
     return (
         <div className="position-relative">
         <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#news">Noticias</a></li>
-            <li><a href="#contact">Contactenos</a></li>
-            <li><a href="#about">Nosotros</a></li>
+            <li>
+            <Link to="/">Home </Link>
+            </li>
+            <li>
+            <Link to="/category/Better+Call+Saul">Better Call Saul </Link>
+                </li>
+            <li>
+                <Link to="/category/Breaking+Bad">Breaking Bad </Link>
+            </li>
+
             <CartWidget/>
         </ul>
         </div>

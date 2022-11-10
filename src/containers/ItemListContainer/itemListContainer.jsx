@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import "./itemListContainer.css"
 import ItemList from "../../components/ItemList/itemList";
+import {useParams} from "react-router-dom";
 
 const ItemListContainer = ({greeting}) => {
 // NOTA: Los containers son los componentes que tienen la logica de negocio.
@@ -8,10 +9,20 @@ const ItemListContainer = ({greeting}) => {
 
     const [products, setProducts] = useState([])                            // Se inicializa con el contenido probable que puede tener la variable
 
+    const {categoryId} = useParams()
+    console.log(categoryId)
+
     useEffect(() => {
         (async () => {
             try {
-                const response = await fetch("https://www.breakingbadapi.com/api/characters")
+                console.log(categoryId)
+                let response
+                if (categoryId) {
+                    response = await fetch("https://www.breakingbadapi.com/api/characters?category=${categoryId}")
+                } else{
+                    response = await fetch("https://www.breakingbadapi.com/api/characters")
+            }
+                console.log(response)
                 const data = await response.json()
                 console.log(data)
                 setProducts(data)
@@ -19,7 +30,7 @@ const ItemListContainer = ({greeting}) => {
                 console.log(error)
             }
         })()
-    }, [])
+    }, [categoryId])
 
 
     return (

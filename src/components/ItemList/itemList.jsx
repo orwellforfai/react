@@ -5,7 +5,7 @@ import Item from "../Item/item";
 const ItemList = ({products}) => {
     return (
         products.map(products => {
-            return <Item product={products}  />
+            return <Item key={products.char_id} product={products}  />
         }
         )
     )
