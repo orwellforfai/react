@@ -8,7 +8,7 @@ const Item = ({product}) => {
 
     const navigateDetail = () => {
         // link al detalle del producto
-        navigate('/detail/${product.char_id}')
+        navigate(`/detail/${product.char_id}`)
     }
         return (
     <div onClick={navigateDetail}>

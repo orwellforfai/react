@@ -18,9 +18,9 @@ const ItemListContainer = ({greeting}) => {
                 console.log(categoryId)
                 let response
                 if (categoryId) {
-                    response = await fetch("https://www.breakingbadapi.com/api/characters?category=${categoryId}")
+                    response = await fetch(`https://www.breakingbadapi.com/api/characters?category=${categoryId}`)
                 } else{
-                    response = await fetch("https://www.breakingbadapi.com/api/characters")
+                    response = await fetch(`https://www.breakingbadapi.com/api/characters`)
             }
                 console.log(response)
                 const data = await response.json()
