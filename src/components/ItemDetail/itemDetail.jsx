@@ -5,6 +5,8 @@ const ItemDetail = ({character}) => {
 
     console.log(character)
     return (
+        // <h1>Hola</h1>
+        // <img src={character.img} width={450}/>
         <div className='item-detail'>
             <img src={character.img} width={450}/>
             <h1>{character.name}</h1>
