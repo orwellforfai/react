@@ -10,7 +10,7 @@ const ItemDetail = ({character}) => {
         <div className='item-detail'>
             <img src={character.img} width={450}/>
             <h1>{character.name}</h1>
-            <button className='btn btn-danger sm-3'>Bootstrap button</button>
+            <button className='btn btn-danger sm-3'>Comprar Poster</button>
         </div>
     )
 }
