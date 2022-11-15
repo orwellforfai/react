@@ -1,16 +1,25 @@
 import React from 'react'
 import "./itemDetail.css"
+import ItemCount from "../ItemCount/itemCount";
 
 const ItemDetail = ({character}) => {
 
-    console.log(character)
+    const confirmPurchase = (quantity) => {
+        console.log(quantity)
+    }
+
     return (
-        // <h1>Hola</h1>
-        // <img src={character.img} width={450}/>
         <div className='item-detail'>
             <img src={character.img} width={450}/>
             <h1>{character.name}</h1>
             <button className='btn btn-danger sm-3'>Comprar Poster</button>
+            <ItemCount
+                onAdd={confirmPurchase}
+                initial={1}
+                stock={100}
+                />
+
+
         </div>
     )
 }
