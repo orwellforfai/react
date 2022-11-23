@@ -1,14 +1,18 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import "./itemDetail.css"
 import ItemCount from "../ItemCount/itemCount";
+import Shop from "../../contexts/shop";
 
 const ItemDetail = ({character}) => {
 
+    const {addProduct} = useContext(Shop)
     const [quantityItemDetal, setQuantityItemDetail] = useState(0)
 
     const confirmPurchase = (quantity) => {
         console.log(quantity)
+        addProduct({...character,quantity})
         setQuantityItemDetail(quantity)
+
     }
 
     return (
