@@ -26,6 +26,7 @@ const ItemDetailContainer = () => {
 
                 if (docSnap.exists()) {
                     console.log("Document data:", docSnap.data());
+
                     setCharacter({...docSnap.data(), id: docSnap.id})
                 } else {
                     // doc.data() will be undefined in this case
