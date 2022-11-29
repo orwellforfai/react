@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react';
 import "./itemListContainer.css"
 import ItemList from "../../components/ItemList/itemList";
 import {useParams} from "react-router-dom";
+import {collection, query,where, getDocs} from "firebase/firestore";
+import {db} from "../../firebase/config";
+
 
 const ItemListContainer = ({greeting}) => {
 // NOTA: Los containers son los componentes que tienen la logica de negocio.
@@ -16,16 +19,41 @@ const ItemListContainer = ({greeting}) => {
         (async () => {
             try {
                 console.log(categoryId)
-                let response
-                if (categoryId) {
-                    response = await fetch(`https://www.breakingbadapi.com/api/characters?category=${categoryId}`)
-                } else{
-                    response = await fetch(`https://www.breakingbadapi.com/api/characters`)
-            }
-                console.log(response)
-                const data = await response.json()
-                console.log(data)
-                setProducts(data)
+                // let response
+                /*                if (categoryId) {
+                                    response = await fetch(`https://www.breakingbadapi.com/api/characters?category=${categoryId}`)
+                                } else {
+                                    response = await fetch(`https://www.breakingbadapi.com/api/characters`)
+                                }*/
+
+                /*                console.log(response)
+                                const data = await response.json()*/
+             /*   console.log(data)*/
+
+                // Codigo copiado de la documentacion de firebase https://firebase.google.com/docs/firestore/query-data/get-data
+
+                // arma la peticion ( aca iria el where...) a la base de datos - coleccion creada en firebase
+                let q
+                if(categoryId) {
+                    q= query(collection(db,"products" ), where ("category", "==",categoryId ))
+                }
+                else {
+                    q = query(collection(db, "products"))
+                }
+                // Ejecuta la query
+                const querySnapshot = await getDocs(q);
+                const productosFirebase = []
+
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id, " => ", doc.data());
+                    productosFirebase.push({...doc.data(), id: doc.id})
+                });
+
+                setProducts(productosFirebase)
+
+
+
             } catch (error) {
                 console.log(error)
             }

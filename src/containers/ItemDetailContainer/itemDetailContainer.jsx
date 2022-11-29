@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import ItemDetail from "../../components/ItemDetail/itemDetail";
 import {useParams} from "react-router-dom";
-
+import {doc, getDoc} from "firebase/firestore";
+import {db} from "../../firebase/config";
 
 const ItemDetailContainer = () => {
 
@@ -10,19 +11,34 @@ const ItemDetailContainer = () => {
 
 
     useEffect(() => {
-        //hacer el fetch del detalle del producto
-        const getCharacterDetail = async () => {
-            const response = await fetch(`https://www.breakingbadapi.com/api/characters/${id}`)
-            const data = await response.json()
+            //hacer el fetch del detalle del producto
+            const getCharacterDetail = async () => {
+                // const response = await fetch(`https://www.breakingbadapi.com/api/characters/${id}`)
+                // const data = await response.json()
+                //
+                // setCharacter(data[0])
 
-            setCharacter(data[0])
-        }
+                // Otra vez tomamos los datos de la doc de firestore. Obtener "un" documento
+                // hacemos el query de busqueda al documento   - el tercer parametro es el id a buscar
+                const docRef = doc(db, "products", id);
+                // ejecutamos la query
+                const docSnap = await getDoc(docRef);
 
-        getCharacterDetail()
-        //hacer el fetch del detalle del producto
-    }, [id])
+                if (docSnap.exists()) {
+                    console.log("Document data:", docSnap.data());
+                    setCharacter({...docSnap.data(), id: docSnap.id})
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No existe el producto!");
+                }
 
-    return ( <ItemDetail character={character}/>)
+            }
+            getCharacterDetail()
+            //hacer el fetch del detalle del producto
+        },
+        [id])
+
+    return (<ItemDetail character={character}/>)
 };
 
 export default ItemDetailContainer;
