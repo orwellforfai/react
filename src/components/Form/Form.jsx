@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 
 const Form = () => {
 
-    <h1>Checkout</h1>
+
     const formik = useFormik({
         initialValues: {
             firstName: '',
@@ -16,6 +16,7 @@ const Form = () => {
         }
     })
     return (
+
         <div>
             <form onSubmit={formik.handleSubmit}>
                 <label htmlFor="firstName">First Name</label>
