@@ -4,7 +4,7 @@ import Root from "../components/Root/root"
 import ItemDetailContainer from "../containers/ItemDetailContainer/itemDetailContainer";
 import ItemListContainer from "../containers/ItemListContainer/itemListContainer";
 import CartContainer from "../containers/CartContainer/cartContainer";
-import Form from "../components/Form/form";
+import Form from "../components/Form/Form";
 
 
 const router = createBrowserRouter([
