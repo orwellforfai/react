@@ -7,7 +7,7 @@ const Root = () => {
         <>
             <NavBar/>
             <Outlet/>
-            <h1> Breaking Bad Information</h1>
+            <h1> Footer - Breaking Bad Information</h1>
         </>
     )
 }
