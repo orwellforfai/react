@@ -13,25 +13,24 @@ const ItemDetail = ({character}) => {
 
     const confirmPurchase = (quantity) => {
         console.log(quantity)
-        addProduct({...character,quantity})
+        addProduct({...character, quantity})
         setQuantityItemDetail(quantity)
     }
 
-    const handleNavigate = () =>{
-navigate('/cart')
+    const handleNavigate = () => {
+        navigate('/cart')
     }
     return (
         <div className='item-detail'>
             <img src={character.img} alt={"Character"} width={450}/>
             <h1>{character.name}</h1>
-            <button className='btn btn-danger sm-3'>Comprar Poster</button>
             {quantityItemDetal ?
-                <button onClick={handleNavigate}> Go to CART </button>
+                <button className='btn btn-danger sm-3' onClick={handleNavigate}> Go to CART </button>
                 :
-                            <ItemCount
-                onAdd={confirmPurchase}
-                initial={1}
-                stock={100}
+                <ItemCount
+                    onAdd={confirmPurchase}
+                    initial={1}
+                    stock={100}
                 />
             }
         </div>

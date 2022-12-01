@@ -10,6 +10,7 @@ const CartContainer = () => {
             {products.map(product => {
                 return <CartItem key={product.id} item={product} />
             })}
+            <button className='btn btn-danger sm-3' onClick={confirmPurchase}> Confirma Compra? </button>
         </div>
     );
 };
