@@ -6,7 +6,7 @@ import {collection, query,where, getDocs} from "firebase/firestore";
 import {db} from "../../firebase/config";
 
 
-const ItemListContainer = ({greeting}) => {
+const ItemListContainer = () => {
 // NOTA: Los containers son los componentes que tienen la logica de negocio.
 // Se encarga de la logica del fetching
 
@@ -19,16 +19,6 @@ const ItemListContainer = ({greeting}) => {
         (async () => {
             try {
                 console.log(categoryId)
-                // let response
-                /*                if (categoryId) {
-                                    response = await fetch(`https://www.breakingbadapi.com/api/characters?category=${categoryId}`)
-                                } else {
-                                    response = await fetch(`https://www.breakingbadapi.com/api/characters`)
-                                }*/
-
-                /*                console.log(response)
-                                const data = await response.json()*/
-             /*   console.log(data)*/
 
                 // Codigo copiado de la documentacion de firebase https://firebase.google.com/docs/firestore/query-data/get-data
 

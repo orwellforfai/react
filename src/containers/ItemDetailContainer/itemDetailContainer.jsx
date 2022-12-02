@@ -13,10 +13,7 @@ const ItemDetailContainer = () => {
     useEffect(() => {
             //hacer el fetch del detalle del producto
             const getCharacterDetail = async () => {
-                // const response = await fetch(`https://www.breakingbadapi.com/api/characters/${id}`)
-                // const data = await response.json()
-                //
-                // setCharacter(data[0])
+
 
                 // Otra vez tomamos los datos de la doc de firestore. Obtener "un" documento
                 // hacemos el query de busqueda al documento   - el tercer parametro es el id a buscar

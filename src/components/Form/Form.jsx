@@ -1,51 +1,91 @@
-import React from 'react'
-import { useFormik } from 'formik';
-import { collection, addDoc } from "firebase/firestore";
-import { db } from '../../firebase/config';
-import generateOrderObject from "../.../services/generateOrderObject";
+import React, {useContext} from 'react'
+import {useFormik} from 'formik';
+import {collection, updateDoc, addDoc, doc, getDoc} from "firebase/firestore";
+import {db} from '../../firebase/config';
+import generateOrderObject from '../../services/generateOrderObject';
+import {Shop} from "../../contexts/shop";
 
 const Form = () => {
 
+    const {products, totalCart} = useContext(Shop)
+
+    const confirmPurchase = () => {
+        (async () => {
+            const nombreComprador = formik.values.Name
+            const telefono = formik.values.Phone
+            const email = formik.values.email
+
+            const generatedOrder = generateOrderObject(
+                nombreComprador,
+                email,
+                telefono,
+                products,
+                totalCart())
+
+
+            let productOutOfStock = []
+            //Chequear el stock de los productos en el carrito
+            for (const productInCart of products) {
+                const docRef = doc(db, "products", productInCart.id);
+                const docSnap = await getDoc(docRef);
+                const productInFirebase = {...docSnap.data(), id: doc.id}
+                if (productInCart.quantity > productInFirebase.quantity) productOutOfStock.push(productInCart)
+            }
+
+            if (productOutOfStock.length === 0) {
+                //Disminuir el stock existente
+
+                for (const productInCart of products) {
+                    const productRef = doc(db, "products", productInCart.id);
+
+                    const docSnap = await getDoc(productRef);
+                    const productInFirebase = {...docSnap.data(), id: doc.id}
+
+                    // Set the "capital" field of the city 'DC'
+                    await updateDoc(productRef, {
+                        quantity: productInFirebase.quantity - productInCart.quantity
+                    });
+                }
+
+                //Generar la orden
+
+                // Add a new document with a generated id
+                try {
+                    const docRef = await addDoc(collection(db, "orders"), generatedOrder);
+                    alert(`Se generó la order correctamente con ID: ${docRef.id}`)
+                } catch (error) {
+                    console.log(error)
+                }
+            } else {
+                alert("Hay algún producto fuera de stock")
+            }
+        })()
+    }
+
+
     const formik = useFormik({
         initialValues: {
-            firstName: '',
-            lastName: '',
+            Name: '',
+            Phone: '',
             email: '',
-            total: '',
         },
         onSubmit: values => {
             alert(JSON.stringify(values, null, 2));
         }
     })
 
-    async ()=> {
-        const firstname = firstname
-        const lastname = lastname
-        const email = email
-            total: totalCart()
-            date: new Date().toLocaleDateString()
-
-        const generatedOrder = generateOrderObject(firstname,lastname,email,products,totalCart())
-        console.log(generatedOrder);
-    }
-    try {
-        const docRef = await addDoc(collection(db, "orders"), generatedOrder);
-        alert(`Se generó la order correctamente con ID: ${docRef.id}`)
-    } catch (error) {
-        console.log(error)
-    }
-    }
-
     return (
 
-        <div >
+        <div>
             <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="firstName">First Name</label>
-                <input id="firstName" name="firstName" placeholder="Diego" onChange={formik.handleChange} value={formik.values.firstName}
+                <label htmlFor="Name">First Name</label>
+                <input id="Name" name="Name" placeholder="Diego" onChange={formik.handleChange}
+                       value={formik.values.Name}
                 />
 
-                <label htmlFor="lastName">Last Name</label>
-                <input id="lastName" name="lastName" placeholder="Maradona" onChange={formik.handleChange} value={formik.values.lastName}
+                <label htmlFor="Phone">Phone</label>
+                <input id="Phone" name="Phone" placeholder="11111111" onChange={formik.handleChange}
+                       value={formik.values.Phone}
                 />
 
                 <label htmlFor="email">Email</label>
@@ -58,11 +98,9 @@ const Form = () => {
                     value={formik.values.email}
 
                 />
-                <label htmlFor="total">Total</label>
-                <input id="total" name="total" placeholder="total" onChange={formik.handleChange} value={formik.values.total}
-                />
 
-                <button type="submit" onClick={  confirmPurchase(orderData)}>Submit</button>
+
+                <button type="submit" onClick={confirmPurchase}>Submit</button>
             </form>
 
         </div>

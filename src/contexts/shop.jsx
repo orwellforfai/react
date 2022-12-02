@@ -44,7 +44,7 @@ const ShopProvider = ({children}) => {
     }
     // Calculo del total
     const totalCart = () => {
-        const total = products.reduce((accumulation, currentProduct) => accumulation = accumulation + currentProduct.quantity + currentProduct.price, 0)
+        const total = products.reduce((accumulation, currentProduct) => accumulation = accumulation + currentProduct.quantity * currentProduct.price, 0)
         return total
     }
     // Calculo del total de Items
